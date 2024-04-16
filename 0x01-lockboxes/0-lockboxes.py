@@ -3,8 +3,9 @@
 can we open all boxes?
 """
 
+
 def canUnlockAll(boxes):
-    """ return true if all can be opened else False """
+    """ Return True if all boxes can be opened, else return False """
     if boxes is None:
         return False
 
