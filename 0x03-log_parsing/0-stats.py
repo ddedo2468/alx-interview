@@ -1,5 +1,7 @@
 #!/usr/bin/python3
+""" log parsing """
 import sys
+
 
 def print_stats(total_size, status_codes):
     print(f"File size: {total_size}")
