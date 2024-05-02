@@ -1,33 +1,53 @@
 #!/usr/bin/python3
-""" log parsing """
-import sys
+"""read log file"""
 
 
-def print_stats(total_size, status_codes):
-    print(f"File size: {total_size}")
-    for code, count in sorted(status_codes.items()):
-        print(f"{code}: {count}")
+def inp_getter(lines):
+    """ get the inp """
+    line = lines.split(' ')
+    return {
+        'status_code': line[-2],
+        'file_size': int(line[-1]),
+    }
+
+
+def stats(file_size, status_code):
+    """ get the stats """
+    print('File size: {:d}'.format(file_size), flush=True)
+    for status_code in sorted(status_code.keys()):
+        n = status_code.get(status_code, 0)
+        if n > 0:
+            print('{:s}: {:d}'.format(status_code, n), flush=True)
+
 
 def main():
-    total_size = 0
-    status_codes = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
-    line_count = 0
-
+    """ main """
+    line_n = 0
+    file_size_sum = 0
+    status_codes_stats = {
+        '200': 0,
+        '301': 0,
+        '400': 0,
+        '401': 0,
+        '403': 0,
+        '404': 0,
+        '405': 0,
+        '500': 0,
+    }
     try:
-        for line in sys.stdin:
-            parts = line.strip().split()
-            if len(parts) == 7 and parts[3].isdigit() and int(parts[3]) in status_codes:
-                total_size += int(parts[6])
-                status_codes[int(parts[3])] += 1
-                line_count += 1
+        while True:
+            line = input()
+            line_info = inp_getter(line)
+            code = line_info.get('status_code', '0')
+            if code in status_codes_stats.keys():
+                status_codes_stats[code] += 1
+            file_size_sum += line_info['file_size']
+            line_n += 1
+            if line_n % 10 == 0:
+                stats(file_size_sum, status_codes_stats)
+    except (KeyboardInterrupt, EOFError, SystemExit):
+        stats(file_size_sum, status_codes_stats)
 
-            if line_count == 10:
-                print_stats(total_size, status_codes)
-                line_count = 0
 
-    except KeyboardInterrupt:
-        print_stats(total_size, status_codes)
-        sys.exit(0)
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
