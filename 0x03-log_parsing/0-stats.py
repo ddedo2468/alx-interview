@@ -1,18 +1,26 @@
 #!/usr/bin/python3
-"""Log parsing"""
+""" parse a log file """
 
 
 import sys
 
 if __name__ == "__main__":
-    fileSize = 0
+    file_Size = 0
     count = 0
 
-    codes = ["200", "301", "400", "401", "403", "404", "405", "500"]
-    stats = {i: 0 for i in codes}
+    stats = {
+        '200': 0,
+        '301': 0,
+        '400': 0,
+        '401': 0,
+        '403': 0,
+        '404': 0,
+        '405': 0,
+        '500': 0,
+    }
 
     def print_stats(stats: dict, file_size: int) -> None:
-        print("File size: {:d}".format(fileSize))
+        print("File size: {:d}".format(file_Size))
         for k, v in sorted(stats.items()):
             if v:
                 print("{}: {}".format(k, v))
@@ -28,12 +36,12 @@ if __name__ == "__main__":
             except BaseException:
                 pass
             try:
-                fileSize += int(data[-1])
+                file_Size += int(data[-1])
             except BaseException:
                 pass
             if count % 10 == 0:
-                print_stats(stats, fileSize)
-        print_stats(stats, fileSize)
+                print_stats(stats, file_Size)
+        print_stats(stats, file_Size)
     except KeyboardInterrupt:
-        print_stats(stats, fileSize)
+        print_stats(stats, file_Size)
         raise
