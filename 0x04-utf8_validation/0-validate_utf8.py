@@ -1,4 +1,9 @@
+#!/usr/bin/python3
+"""UTF-8 Validation"""
+
+
 def validUTF8(data):
+    """return true if valid utf-8 stream"""
     num_of_bytes = 0
 
     for value in data:
