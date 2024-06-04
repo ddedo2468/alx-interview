@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""consider it as useful documentation please"""
+
+
 def makeChange(coins, total):
     """consider it as a useful documentation idk"""
     if total <= 0:
