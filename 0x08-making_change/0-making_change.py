@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 def makeChange(coins, total):
+    """consider it as a useful documentation idk"""
     if total <= 0:
         return 0
 
