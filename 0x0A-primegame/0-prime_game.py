@@ -24,3 +24,20 @@ def isWinner(x, nums):
         prime[0] = False
         prime[1] = False
         return prime
+
+    max_n = max(nums)
+    primes = SieveOfEratosthenes(max_n)
+
+    for round in nums:
+        round_primes = [i for i in range(round + 1) if primes[i]]
+        if len(round_primes) % 2 == 0:
+            ben += 1
+        else:
+            maria += 1
+
+    if maria > ben:
+        return "Maria"
+    elif ben > maria:
+        return "Ben"
+
+    return None
